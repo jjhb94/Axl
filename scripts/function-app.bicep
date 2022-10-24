@@ -1,6 +1,8 @@
 @description('The name of the function app that you wish to create.')
 param appName string = '${uniqueString(resourceGroup().id)}functionapp'
 
+@minLength(3)
+@maxLength(24)
 @description('Location for all resources.')
 param storageAccountName string = '${uniqueString(resourceGroup().id)}storage'
 
@@ -38,7 +40,7 @@ var applicationInsightsName_var = applicationInsightsName
 var storageAccountName_var = storageAccountName
 var functionWorkerRuntime = runtime
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   name: storageAccountName_var
   location: location
   sku: {
@@ -47,7 +49,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   kind: 'Storage'
 }
 
-resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
+resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: hostingPlanName_var
   location: location
   sku: {
@@ -60,7 +62,7 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
   }
 }
 
-resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
+resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
   name: functionAppName
   location: location
   kind: 'functionapp,linux'
