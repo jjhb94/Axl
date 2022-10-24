@@ -1,8 +1,8 @@
 @description('The name of the function app that you wish to create.')
+// Find more on Bicep files here: https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/file
 param appName string = '${uniqueString(resourceGroup().id)}functionapp'
 
 @minLength(3)
-@maxLength(24)
 @description('Location for all resources.')
 param storageAccountName string = '${uniqueString(resourceGroup().id)}storage'
 
@@ -47,6 +47,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
     name: storageAccountType
   }
   kind: 'Storage'
+  properties: {
+    supportsHttpsTrafficOnly: true
+  }
 }
 
 resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
